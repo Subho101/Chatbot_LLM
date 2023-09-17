@@ -1,0 +1,412 @@
+2023-09-17 22:04:20 [INFO] Question: Hi
+2023-09-17 22:04:20 [INFO] Running PandasAI with openai LLM...
+2023-09-17 22:04:20 [INFO] Prompt ID: 71fe36c5-ca15-412a-abb3-8852d6f415c2
+2023-09-17 22:04:39 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in exports/charts/temp_chart.png and do not show the chart.)
+    4. Output: return a dictionary of:
+    - type (possible values "text", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Example output: { "type": "text", "value": "The average loan amount is $15,000." }
+    """
+
+    # Prepare: No preprocessing or cleaning required for this task
+
+    # Process: Filter the dataframes based on certain conditions
+    filtered_df1 = dfs[0][(dfs[0]['DirectionName'] == 'Long') & (dfs[0]['PL_DTD'] > 0)]
+    filtered_df2 = dfs[1][(dfs[1]['TradeTypeName'] == 'Buy') & (dfs[1]['AllocationPrincipal'] > 0)]
+
+    # Analyze: Calculate the sum of PL_DTD from filtered_df1 and the sum of AllocationPrincipal from filtered_df2
+    total_pl_dtd = filtered_df1['PL_DTD'].sum()
+    total_allocation_principal = filtered_df2['AllocationPrincipal'].sum()
+
+    # Output: Return the results as a dictionary
+    output = {
+        "type": "text",
+        "value": f"The total PL_DTD is {total_pl_dtd} and the total AllocationPrincipal is {total_allocation_principal}."
+    }
+    return output
+```
+
+2023-09-17 22:04:39 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in exports/charts/temp_chart.png and do not show the chart.)
+    4. Output: return a dictionary of:
+    - type (possible values "text", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Example output: { "type": "text", "value": "The average loan amount is $15,000." }
+    """
+    filtered_df1 = dfs[0][(dfs[0]['DirectionName'] == 'Long') & (dfs[0]['PL_DTD'] > 0)]
+    filtered_df2 = dfs[1][(dfs[1]['TradeTypeName'] == 'Buy') & (dfs[1]['AllocationPrincipal'] > 0)]
+    total_pl_dtd = filtered_df1['PL_DTD'].sum()
+    total_allocation_principal = filtered_df2['AllocationPrincipal'].sum()
+    output = {'type': 'text', 'value': f'The total PL_DTD is {total_pl_dtd} and the total AllocationPrincipal is {total_allocation_principal}.'}
+    return output
+        ```
+2023-09-17 22:04:39 [INFO] Answer: {'type': 'text', 'value': 'The total PL_DTD is 151978.0544 and the total AllocationPrincipal is 7800492984.020001.'}
+2023-09-17 22:04:39 [INFO] Executed in: 19.802671909332275s
+2023-09-17 22:04:48 [INFO] Question: Which funds performed better depending on the yearly Profit and Loss of that fund.
+2023-09-17 22:04:48 [INFO] Running PandasAI with openai LLM...
+2023-09-17 22:04:48 [INFO] Prompt ID: 04a38815-2404-4119-94b0-7d5bd52c3c8d
+2023-09-17 22:05:03 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in exports/charts/temp_chart.png and do not show the chart.)
+    4. Output: return a dictionary of:
+    - type (possible values "text", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Example output: { "type": "text", "value": "The average loan amount is $15,000." }
+    """
+    # Prepare: No preprocessing or cleaning required
+    
+    # Process: Calculate yearly Profit and Loss for each fund
+    df = dfs[0]
+    df['AsOfDate'] = pd.to_datetime(df['AsOfDate'])
+    df['Year'] = df['AsOfDate'].dt.year
+    df['PL_YTD'] = pd.to_numeric(df['PL_YTD'])
+    df_grouped = df.groupby('PortfolioName')['PL_YTD'].sum().reset_index()
+    
+    # Analyze: Sort funds based on yearly Profit and Loss
+    df_sorted = df_grouped.sort_values('PL_YTD', ascending=False)
+    
+    # Output: Return the sorted dataframe
+    return {"type": "dataframe", "value": df_sorted}
+```
+
+2023-09-17 22:05:03 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in exports/charts/temp_chart.png and do not show the chart.)
+    4. Output: return a dictionary of:
+    - type (possible values "text", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Example output: { "type": "text", "value": "The average loan amount is $15,000." }
+    """
+    df = dfs[0]
+    df['AsOfDate'] = pd.to_datetime(df['AsOfDate'])
+    df['Year'] = df['AsOfDate'].dt.year
+    df['PL_YTD'] = pd.to_numeric(df['PL_YTD'])
+    df_grouped = df.groupby('PortfolioName')['PL_YTD'].sum().reset_index()
+    df_sorted = df_grouped.sort_values('PL_YTD', ascending=False)
+    return {'type': 'dataframe', 'value': df_sorted}
+        ```
+2023-09-17 22:05:03 [INFO] Answer: {'type': 'dataframe', 'value':               PortfolioName        PL_YTD
+18                     Ytum  7.229903e+06
+8                    NPSMF1  3.043387e+05
+9                    NPSMF2  2.975902e+05
+10                   NPSMF3  2.073081e+05
+0                  CoYold 1  2.105159e+04
+6                   IG Corp  2.068600e+00
+14                   SMA-L1 -3.287669e+03
+15                   SMA-L2 -3.337672e+03
+16                   SMA-L4 -3.337672e+03
+5                  Hi Yield -5.124479e+04
+17            Warren Lee IG -5.707100e+04
+12  Opium Holdings Partners -8.860095e+06
+13                  Platpot -3.650601e+07
+1                 CoYold 11 -1.120346e+08
+3                  Garfield -1.685510e+08
+4                   Heather -1.815971e+08
+11          Northpoint 401K -2.186799e+08
+7       MNC Investment Fund -3.286149e+08
+2                  CoYold 7 -5.000000e+09}
+2023-09-17 22:05:03 [INFO] Executed in: 14.85624647140503s
+2023-09-17 22:05:23 [INFO] Question: Total number of holdings or trades IG Corp
+2023-09-17 22:05:23 [INFO] Running PandasAI with openai LLM...
+2023-09-17 22:05:23 [INFO] Prompt ID: 963baf77-ea3e-4e34-8ba1-9c021ed96e9c
+2023-09-17 22:05:37 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in exports/charts/temp_chart.png and do not show the chart.)
+    4. Output: return a dictionary of:
+    - type (possible values "text", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Example output: { "type": "text", "value": "The average loan amount is $15,000." }
+    """
+    # Prepare
+    holdings_df = dfs[0]
+    trades_df = dfs[1]
+
+    # Process
+    total_holdings = len(holdings_df)
+    total_trades = len(trades_df)
+
+    # Analyze
+    if "holdings" in question.lower():
+        output = {"type": "number", "value": total_holdings}
+    elif "trades" in question.lower():
+        output = {"type": "number", "value": total_trades}
+    else:
+        output = {"type": "text", "value": "Please specify whether you want to know the total number of holdings or trades."}
+
+    return output
+```
+
+2023-09-17 22:05:37 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in exports/charts/temp_chart.png and do not show the chart.)
+    4. Output: return a dictionary of:
+    - type (possible values "text", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Example output: { "type": "text", "value": "The average loan amount is $15,000." }
+    """
+    holdings_df = dfs[0]
+    trades_df = dfs[1]
+    total_holdings = len(holdings_df)
+    total_trades = len(trades_df)
+    if 'holdings' in question.lower():
+        output = {'type': 'number', 'value': total_holdings}
+    elif 'trades' in question.lower():
+        output = {'type': 'number', 'value': total_trades}
+    else:
+        output = {'type': 'text', 'value': 'Please specify whether you want to know the total number of holdings or trades.'}
+    return output
+        ```
+2023-09-17 22:05:37 [WARNING] Error of executing code
+2023-09-17 22:05:37 [WARNING] Failed to execute code with a correction framework [retry number: 1]
+2023-09-17 22:05:37 [ERROR] Failed with error: name 'question' is not defined. Retrying
+2023-09-17 22:05:57 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame], question: str) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in exports/charts/temp_chart.png and do not show the chart.)
+    4. Output: return a dictionary of:
+    - type (possible values "text", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Example output: { "type": "text", "value": "The average loan amount is $15,000." }
+    """
+    holdings_df = dfs[0]
+    trades_df = dfs[1]
+    total_holdings = len(holdings_df)
+    total_trades = len(trades_df)
+    if 'holdings' in question.lower():
+        output = {'type': 'number', 'value': total_holdings}
+    elif 'trades' in question.lower():
+        output = {'type': 'number', 'value': total_trades}
+    else:
+        output = {'type': 'text', 'value': 'Please specify whether you want to know the total number of holdings or trades.'}
+    return output
+        ```
+2023-09-17 22:05:57 [WARNING] Error of executing code
+2023-09-17 22:05:57 [WARNING] Failed to execute code with a correction framework [retry number: 2]
+2023-09-17 22:05:57 [ERROR] Failed with error: analyze_data() missing 1 required positional argument: 'question'. Retrying
+2023-09-17 22:06:11 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame], question: str) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in exports/charts/temp_chart.png and do not show the chart.)
+    4. Output: return a dictionary of:
+    - type (possible values "text", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Example output: { "type": "text", "value": "The average loan amount is $15,000." }
+    """
+    holdings_df = dfs[0]
+    trades_df = dfs[1]
+    total_holdings = len(holdings_df)
+    total_trades = len(trades_df)
+    if 'holdings' in question.lower():
+        output = {'type': 'number', 'value': total_holdings}
+    elif 'trades' in question.lower():
+        output = {'type': 'number', 'value': total_trades}
+    else:
+        output = {'type': 'text', 'value': 'Please specify whether you want to know the total number of holdings or trades.'}
+    return output
+        ```
+2023-09-17 22:06:11 [WARNING] Error of executing code
+2023-09-17 22:06:45 [INFO] Question: Total number of holdings or trades for Garfield
+2023-09-17 22:06:45 [INFO] Running PandasAI with openai LLM...
+2023-09-17 22:06:45 [INFO] Prompt ID: 6aec413f-01ab-4564-9f03-2a9767cb8259
+2023-09-17 22:07:00 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in exports/charts/temp_chart.png and do not show the chart.)
+    4. Output: return a dictionary of:
+    - type (possible values "text", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Example output: { "type": "text", "value": "The average loan amount is $15,000." }
+    """
+    # Prepare
+    df_holdings = dfs[0]
+    df_trades = dfs[1]
+    
+    # Process
+    garfield_holdings = df_holdings[df_holdings['PortfolioName'] == 'Garfield']
+    garfield_trades = df_trades[df_trades['PortfolioName'] == 'Garfield']
+    
+    # Analyze
+    num_holdings = len(garfield_holdings)
+    num_trades = len(garfield_trades)
+    
+    # Output
+    output = {
+        "type": "text",
+        "value": f"Total number of holdings for Garfield: {num_holdings}\nTotal number of trades for Garfield: {num_trades}"
+    }
+    
+    return output
+```
+
+2023-09-17 22:07:00 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in exports/charts/temp_chart.png and do not show the chart.)
+    4. Output: return a dictionary of:
+    - type (possible values "text", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Example output: { "type": "text", "value": "The average loan amount is $15,000." }
+    """
+    df_holdings = dfs[0]
+    df_trades = dfs[1]
+    garfield_holdings = df_holdings[df_holdings['PortfolioName'] == 'Garfield']
+    garfield_trades = df_trades[df_trades['PortfolioName'] == 'Garfield']
+    num_holdings = len(garfield_holdings)
+    num_trades = len(garfield_trades)
+    output = {'type': 'text', 'value': f"""Total number of holdings for Garfield: {num_holdings}
+Total number of trades for Garfield: {num_trades}"""}
+    return output
+        ```
+2023-09-17 22:07:00 [INFO] Answer: {'type': 'text', 'value': 'Total number of holdings for Garfield: 221\nTotal number of trades for Garfield: 0'}
+2023-09-17 22:07:00 [INFO] Executed in: 15.805006742477417s
+2023-09-17 22:16:11 [INFO] Question: Which funds performed better depending on the yearly Profit and Loss of that fund
+2023-09-17 22:16:11 [INFO] Running PandasAI with openai LLM...
+2023-09-17 22:16:11 [INFO] Prompt ID: 702d20e8-2317-46f0-bb6b-b80764debe3a
+2023-09-17 22:16:28 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in exports/charts/temp_chart.png and do not show the chart.)
+    4. Output: return a dictionary of:
+    - type (possible values "text", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Example output: { "type": "text", "value": "The average loan amount is $15,000." }
+    """
+    # Prepare: Preprocessing and cleaning data if necessary
+    df = dfs[0]
+    
+    # Process: Manipulating data for analysis
+    df['AsOfDate'] = pd.to_datetime(df['AsOfDate'])
+    df['Year'] = df['AsOfDate'].dt.year
+    df['PL_YTD'] = pd.to_numeric(df['PL_YTD'])
+    
+    # Analyze: Conducting the actual analysis
+    result_df = df.groupby('PortfolioName')['PL_YTD'].sum().reset_index()
+    result_df = result_df.sort_values('PL_YTD', ascending=False)
+    
+    # Output: return a dictionary
+    output = {
+        "type": "dataframe",
+        "value": result_df
+    }
+    
+    return output
+```
+
+2023-09-17 22:16:28 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in exports/charts/temp_chart.png and do not show the chart.)
+    4. Output: return a dictionary of:
+    - type (possible values "text", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Example output: { "type": "text", "value": "The average loan amount is $15,000." }
+    """
+    df = dfs[0]
+    df['AsOfDate'] = pd.to_datetime(df['AsOfDate'])
+    df['Year'] = df['AsOfDate'].dt.year
+    df['PL_YTD'] = pd.to_numeric(df['PL_YTD'])
+    result_df = df.groupby('PortfolioName')['PL_YTD'].sum().reset_index()
+    result_df = result_df.sort_values('PL_YTD', ascending=False)
+    output = {'type': 'dataframe', 'value': result_df}
+    return output
+        ```
+2023-09-17 22:16:28 [INFO] Answer: {'type': 'dataframe', 'value':               PortfolioName        PL_YTD
+18                     Ytum  7.229903e+06
+8                    NPSMF1  3.043387e+05
+9                    NPSMF2  2.975902e+05
+10                   NPSMF3  2.073081e+05
+0                  CoYold 1  2.105159e+04
+6                   IG Corp  2.068600e+00
+14                   SMA-L1 -3.287669e+03
+15                   SMA-L2 -3.337672e+03
+16                   SMA-L4 -3.337672e+03
+5                  Hi Yield -5.124479e+04
+17            Warren Lee IG -5.707100e+04
+12  Opium Holdings Partners -8.860095e+06
+13                  Platpot -3.650601e+07
+1                 CoYold 11 -1.120346e+08
+3                  Garfield -1.685510e+08
+4                   Heather -1.815971e+08
+11          Northpoint 401K -2.186799e+08
+7       MNC Investment Fund -3.286149e+08
+2                  CoYold 7 -5.000000e+09}
+2023-09-17 22:16:28 [INFO] Executed in: 17.588492393493652s
