@@ -10,7 +10,7 @@ load_dotenv()
 st.set_page_config(page_title="Trading ChatBot")
 
 #os.environ["OPENAI_API_KEY"] = "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"
-openai_api_key = os.getenv("OPENAI_API_KEY")
+openai_api_key = st.secrets['OPENAI_API_KEY']
 
 llm = OpenAI(api_token=openai_api_key)
 
