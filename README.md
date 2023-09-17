@@ -1,7 +1,10 @@
 Project Description
 This Python project is designed to showcase the capabilities of the OpenAI API using Streamlit and PandasAI, a web app framework. The project allows you to interact with the CSV to generate answer based on user query.
 
-Getting Started
+Demo : https://chatbotllm-sabpemmxc7mfx5tkub5stk.streamlit.app/
+
+or
+
 Follow the steps below to set up and run the project:
 
 1. Clone the Repository
