@@ -44,3 +44,6 @@ http://localhost:8501
 ```
 
 You will be able to interact with the project using your web browser.
+
+License
+This project is licensed under the MIT License.
